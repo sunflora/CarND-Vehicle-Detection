@@ -1,0 +1,15 @@
+.gitignore~
+.#.gitignore
+
+__pycache__/*
+
+.idea/*
+
+vehicle_detection.py
+labeled_data/*
+output_videos/*
+
+output_image/.DS_Store
+examples/.DS_Store
+
+README-orig.md
