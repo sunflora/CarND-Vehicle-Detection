@@ -14,7 +14,7 @@ The goals / steps of this project are the following:
 ##Overview
 This is yet another super fun project and our goal is to identify cars on the road.  Human can do this easily but how does a self-driving car do it?  
 
-In this project we take the traditional machine vision approach by first studying two set of example images.  One set of these images are photos of cars on the road and the other set are images of parts of the road.  
+In this project we take the traditional machine vision approach by first studying two set of example images.  One set of these images contains some photos of cars on the road and the other set contains photos of taken of the road/highway without the presence of any car.  
 
 We then use computer vision techniques to construct two sets of features that can be thought of as the "DNA" of the car images and the "DNA" of noncar images.  We then train a SVM classifer to be able to predict whether a new image is a car or is not a car based on how closely the "DNA" of the said new image resembles that of an image of the car or otherwise.
 
@@ -93,9 +93,9 @@ The code for this section can be found in the `bin_spatial()` method of the `Det
 
 The code for this section can be found in `color_hist()` method of the `DetectionTraining` class in `detection_training.py` file.
 
-The final feature for each image is extracted from spatial binning, color historgram and HOG.  The sub-features from each step are into the final feature to form the "DNA" of the image.  This section of the code can be found in `extract_features()` method of 'DetectionTraining` class.
+The final feature for each image is extracted from spatial binning, color historgram and HOG.  The sub-features from each step are stacked to form the final feature - the "DNA" of the image.  This section of the code can be found in `extract_features()` method of `DetectionTraining` class.
 
-Once we have the "DNA"s for the cars and noncars images, we use `sklearn.preprocessing.StandardScalar()` to normalize the feature values of car and noncar images.  We shuffle the order of the car and noncar features and split out the test set before using `LinearSVC()` (Linear Support Vector Classification, a variation of SVM with parameter kernel=’linear’ and implemented in terms of liblinear rather than libsvm) to train our classifier.
+Once we have the "DNA"s for the cars and noncars images, we use `sklearn.preprocessing.StandardScalar()` to normalize the feature values of car and noncar images.  We shuffle the the car and noncar features and split the data into training/test set in the ratio of 90/10. We then use `LinearSVC()` (Linear Support Vector Classification, a variation of SVM with parameter kernel=’linear’ and implemented in terms of liblinear rather than libsvm) to train our classifier.
 
 The code for this section can be found in `train_classifier()` function in `car_detection.py`.
 
@@ -119,7 +119,7 @@ We use a scale variable to search different window sizes.  Rather than sliding d
 
 ---
 
-I experiement with different value and settled on the current values of window size is 96 and 50% of overlapping.  The result is from experimentation.  A smaller window works better when the car is further ahead (appears smaller) and a larger window works better when the car is near (appears larger).  Size 96 is a compromise of 64 and 128.  
+We experiement with different values and settle on the current values of window size as 96px and 50% of overlapping.  A smaller window works better when the car is further ahead (appears smaller) and a larger window works better when the car is near (appears larger).  Size 96px seems to work better than both 64px and 128px.  
 
 
 ---
@@ -165,4 +165,4 @@ In order to remove false postives, we apply `apply_threshold` in `SlidingWindowS
 
 The pipeline is heavily dependent on the training set.  However, I wonder, if it will be able to detect non-conventional vehicles that are not made out of metal.  For example if a car camouflage as a ... tree or a house, etc.  I think perhaps we should figure out how to detect moving objects vs non-moving objects?
 
-For some reason, the detection on the white car is far less robust than on the black cars.  I wonder what is the reason.  We had to identify white lanes in the previous projects and we use color filter to extract out the white color part.  I wonder if this has anything to do with the number of white cars in the database.  It might be interest to take a color look at the color histogram and see how white compares with black.   
+For some reason, the detection on the white car is far less robust than on the black cars.  I wonder what is the reason.  We had to identify white lanes in the previous projects and we use color filter to extract out the white color part.  I wonder if this has anything to do with the number of white cars in the database.  It might be interesting to take a closer look at the color histogram and see how white compares with black.   
