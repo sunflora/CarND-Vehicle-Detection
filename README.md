@@ -128,7 +128,7 @@ We experiement with different values and settle on the current values of window 
 ---
 Here are some images that demonstrate the result of the process image function.  The right side of the images are heatmaps and will be discussed in the next section.
 
-![Pipeline test](./output_images/test_images_and_heatmaps.png)
+![Pipeline test](./output_images/test_images_and_heatmaps-short.png)
 
 
 
